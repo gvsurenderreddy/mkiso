@@ -1,0 +1,39 @@
+#!/usr/bin/bash
+
+################################
+# Generate Minimal ArchBSD ISO #
+################################
+
+source ./fn-common.bash
+
+grub_install() {
+	grubpath=${isoroot}/boot/grub/
+	pacman -Sydd grub-common grub-bios -r ${isoroot} --cachedir ${temproot}/var/cache/pacman/pkg/ --noconfirm
+	
+        mv ${isoroot}/usr/lib/grub/i386-pc* ${grubpath}
+	
+	cp ${files}/{grub.cfg,eltorito.img,splash.png,font.pf2} ${grubpath}
+	
+}
+
+make_iso() {
+	mkisofs -R -b boot/grub/eltorito.img -no-emul-boot -boot-load-size 4 -boot-info-table -V ArchBSD -o ArchBSD-x86_64-${date}.iso ${isoroot}
+}
+
+check
+
+mktemproot
+
+mkdirlayout
+
+copyfiles
+
+copydirs
+
+package_install
+
+grub_install
+
+config_setup
+
+make_iso
