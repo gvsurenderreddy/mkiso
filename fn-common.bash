@@ -10,8 +10,9 @@ temproot=${curdir}/ArchBSD_temp
 isoroot=${curdir}/ArchBSD_iso
 files=${curdir}/files
 #Since we're not checkign deps, and need libiconv and bash installed in the correct order
-packagelist="archbsd-keyring ca_root_nss curl cyrus-sasl gnupg gpgme libarchive libassuan libgcrypt libgpg-error libksba libldap libsasl libtool pacman-mirrorlist pinentry pkgconf pth freebsd-kernel gcc-libs libpthread-stubs openrc pacman nano"
+packagelist="archbsd-keyring ca_root_nss curl cyrus-sasl gnupg gpgme libarchive libassuan libgcrypt libgpg-error libksba libldap libsasl libtool pacman-mirrorlist pinentry pkgconf pth freebsd-kernel gcc-libs libpthread-stubs openrc pacman nano vim"
 date=`date +"%d%m%Y"`
+arch=$(awk '/Architecture =/ {print $3}')
 
 
 check() {
@@ -45,6 +46,8 @@ mktemproot() {
 	install -m644 ${files}/pacman.conf.clean ${temproot}/etc/pacman.conf
 	install -dm755 ${temproot}/var/{lib,cache}/pacman
 	pacman -Sy base --config ${temproot}/etc/pacman.conf -r ${temproot} --cachedir ${temproot}/var/cache/pacman/pkg/
+	## This needs to be done again as pacman from base will override it...
+	install -m644 ${files}/pacman.conf.clean ${temproot}/etc/pacman.conf
 }
 
 mkdirlayout() {
