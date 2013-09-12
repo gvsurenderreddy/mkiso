@@ -2,5 +2,8 @@
 tmpfs /tmp tmpfs rw,mode=777 0 0
 md /rw_etc mfs rw,-s5M,noatime 0 0
 md /rw_var mfs rw,-s5M,noatime 0 0
+md /rw_mnt mfs rw,-s5M,noatime 0 0
 /rw_etc /etc unionfs rw 0 0
 /rw_var /var unionfs rw 0 0
+/rw_mnt /mnt unionfs rw 0 0
+
