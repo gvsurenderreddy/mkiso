@@ -1,0 +1,73 @@
+#!/usr/bin/bash
+
+#############################################################
+# Unified Image-builder to Generate Minimal ArchBSD ISO/IMG #
+#############################################################
+
+die() {
+	echo "$@"
+	exit 1
+}
+
+usage() {
+	echo "usage: $0 -o [img|iso] [-d date] [-a arch]"
+	echo "  -o output    select output format (img or iso)"
+	echo "  -d date      set a custom date (YYYY-mm-dd format)"
+	echo "  -a arch      override arch (x86_64 or i686) (NOTE: NOT IMPLEMENTED YET!)"
+}
+
+OUTPUT=""
+DATE=$(date +%Y-%m-%d) # returns current date
+ARCH=$(uname -m) # should return present arch...
+
+while getopts "o:d:a:" opt; do
+	case $opt in
+		o)
+			if [[ "$OPTARG" != "img" && "$OPTARG" != "iso" ]] ; then
+				echo "Invalid format specified"
+				usage
+				exit 1
+			fi
+			OUTPUT="$OPTARG"
+			;;
+		d)
+			DATE=$(date -j -f "%Y-%m-%d" "$OPTARG" +%Y-%m-%d 2>/dev/null)
+			if [[ $? ]]; then
+				echo "Invalid date entered"
+				usage
+				exit 1
+			fi
+			;;
+		a)
+			if [[ "$OPTARG" != "x86_64" && "$OPTARG" != "i686" ]]; then
+				echo "Invalid architecture specified"
+				usage
+				exit 1
+			fi
+			ARCH="$OPTARG"
+			;;
+		*)	
+			echo "Invalid argument"
+			usage
+			exit 1
+			;;
+	esac
+done
+shift $(($OPTIND - 1))
+
+if [[ "$OUTPUT" == "" ]]; then
+	echo "No architecture specified"
+	echo -n
+	usage
+	exit 1
+fi
+
+source ./fn-common.bash
+
+echo "Output-format: $OUTPUT"
+echo "Date:          $DATE"
+echo "Architecture:  $ARCH"
+
+usage
+
+exit 1

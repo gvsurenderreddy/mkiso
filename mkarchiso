@@ -17,7 +17,7 @@ grub_install() {
 }
 
 make_iso() {
-	mkisofs -R -b boot/grub/eltorito.img -no-emul-boot -boot-load-size 4 -boot-info-table -V ArchBSD -o ArchBSD-x86_64-${date}.iso ${isoroot}
+	mkisofs -R -b boot/grub/eltorito.img -no-emul-boot -boot-load-size 4 -boot-info-table -V ArchBSD -o ArchBSD-${arch}-${date}.iso ${isoroot}
 }
 
 check
