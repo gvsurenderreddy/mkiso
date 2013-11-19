@@ -1,0 +1,59 @@
+#!/usr/bin/env -e bash
+
+source functions/global.sh
+source functions/mkiso
+#source functions/mkimg
+
+tmpdir="/tmp"
+mfsroot="archbsd_root"
+temp_mount="${tempdir}/temp_mount"
+absd_mount="${tmpdir}/archbsd_mount"
+files="files/"
+if [ ! -d "${tmpdir}/archbsd_mount" ]; then
+	mkdir -p "${tmpdir}/archbsd_mount"
+fi
+
+if [ ! -d "${temp_mount}" ]; then
+  mkdir -p "${temp_mount}"
+fi
+
+
+eval set -- $(/usr/local/bin/getopt -n $0 -o "-imha:s:n:" -- "$@")
+
+declare i m h a s n
+
+usage() {
+
+cat << _EOF_
+	-i:        Generate iso
+	-m:        Generate image
+	-h:        Display help
+	-s size:   Memory Disk creation size in megabytes
+	-a arch:   Generate for target arch
+	-n number: What to number the md disk
+_EOF_
+}
+
+while [ $# -gt 0 ] ; do
+	case "$1" in
+		-i) generate_iso="yes"; shift ;;
+		-m) generate_img="yes"; shift ;;
+		-h) usage ; shift ;;
+		-a) shift ; gen_arch="$1" ; shift ;;
+		-s) shift ; md_size="$1" ; shift ;;
+		-n) shift ; md_number="$1" ; shift ;;
+		--) shift ;;
+		-*) echo "bad option '$1'" ; exit 1 ;;
+		*) usage; shift ;;
+	esac
+done
+
+
+
+if [ -n ${generate_iso} ]; then
+	generate_iso ${gen_arch}
+fi
+
+if [ -n ${generate_img} ]; then
+	generate_image ${gen_arch}
+fi

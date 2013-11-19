@@ -1,4 +1,3 @@
-/boot/
 /var/crash
 /var/cron
 /var/db
@@ -9,7 +8,6 @@
 /var/log
 /var/mail
 /var/msgs
-/var/named
 /var/preserve
 /var/run
 /var/rwho

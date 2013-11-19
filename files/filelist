@@ -4,7 +4,6 @@
 /usr/sbin/wpa_cli
 /usr/sbin/wpa_passphrase
 /usr/sbin/wpa_supplicant
-/boot/device.hints
 /usr/bin/install-info
 /usr/bin/bzip2
 /usr/bin/bzip2recover
@@ -125,7 +124,6 @@
 /usr/sbin/arp
 /usr/sbin/audit
 /usr/sbin/boot0cfg
-/usr/sbin/burncd
 /usr/sbin/chkgrp
 /usr/sbin/chown
 /usr/sbin/chroot
@@ -167,7 +165,6 @@
 /usr/sbin/sendmail
 /usr/sbin/sshd
 /usr/sbin/swapinfo
-/usr/sbin/sysinstall
 /usr/sbin/syslogd
 /usr/sbin/traceroute
 /usr/sbin/vidcontrol
@@ -201,7 +198,6 @@
 /etc/mail.rc
 /etc/master.passwd
 /etc/netconfig
-/etc/netstart
 /etc/network.subr
 /etc/networks
 /etc/newsyslog.conf

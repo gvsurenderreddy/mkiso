@@ -8,11 +8,14 @@
 curdir=`pwd`
 temproot=${curdir}/ArchBSD_temp
 isoroot=${curdir}/ArchBSD_iso
+mfsroot=${curdir}/archbsd_root
 files=${curdir}/files
+
 #Since we're not checkign deps, and need libiconv and bash installed in the correct order
-packagelist="archbsd-keyring ca_root_nss curl cyrus-sasl gnupg gpgme libarchive libassuan libgcrypt libgpg-error libksba libldap libsasl libtool pacman-mirrorlist pinentry pkgconf pth freebsd-kernel gcc-libs libpthread-stubs openrc pacman nano vim"
+packagelist="archbsd-keyring ca_root_nss curl cyrus-sasl gnupg gpgme libarchive libassuan libgcrypt libgpg-error libksba libldap libsasl libtool pacman-mirrorlist pinentry pkgconf pth freebsd-kernel gcc-libs libpthread-stubs 
+openrc pacman nano vim dhcpcd"
 date=`date +"%d%m%Y"`
-arch=$(awk '/Architecture =/ {print $3}')
+#arch=$(awk '/Architecture =/ {print $3}')
 
 
 check() {
@@ -38,8 +41,23 @@ check() {
 
         if [ ! -d ${imgroot} ]; then
         	mkdir ${imgroot}
-	fi
+				fi
+
 }
+
+setupmd() {
+	if [ ! -f ${mfsroot} ]; then
+		dd if=/dev/zero of=${mfsroot} bs=1M count=${mdsize}
+	fi
+	mdconfig -a -t vnode -f ${mfsroot} -u 1337
+	if [ ! $? ]; then
+		echo "Can't create md1337 :("
+		exit 1
+	fi
+
+	mount /dev/md1337 ${isoroot}
+}
+
 
 mktemproot() {
 	install -dm755 ${temproot}/etc
@@ -100,6 +118,7 @@ config_setup() {
 	rm -f ${isoroot}/etc/runlevels/boot/root
 	chroot ${isoroot} /sbin/rc-update add modules default
 	chroot ${isoroot} /sbin/rc-update add devd default
+	chroot ${isoroot} /sbin/rc-update add dhcpcd default
         chroot ${isoroot} /sbin/ldconfig -m /usr/lib
         chroot ${isoroot} /sbin/ldconfig -m /usr/local/lib
         chroot ${isoroot} /sbin/ldconfig -m /lib
@@ -113,4 +132,9 @@ config_setup() {
         chroot ${isoroot} /usr/bin/pacman-key --populate archbsd
  	#unmount devfs
 	umount ${isoroot}/dev
+}
+
+
+compress_root() {
+	gzip ${mfsroot}
 }

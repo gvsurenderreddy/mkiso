@@ -1,0 +1,21 @@
+generate_iso() {
+	local arch="$1"
+
+	create_md 600
+
+	mount_md 500
+
+	populate_temproot
+	
+	populate_absd_mount
+
+	install_packages
+
+	umount_md
+
+	compress_mfsroot
+
+	create_structure
+	
+}
+

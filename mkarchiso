@@ -4,6 +4,12 @@
 # Generate Minimal ArchBSD ISO #
 ################################
 
+OUTPUT=""
+date=$(date +%Y-%m-%d) # returns current date
+arch=$(uname -m) # should return present arch...
+MFSROOT="archbsd_root"
+mdsize="250"
+
 source ./fn-common.bash
 
 grub_install() {
@@ -21,6 +27,8 @@ make_iso() {
 }
 
 check
+
+#setupmd
 
 mktemproot
 

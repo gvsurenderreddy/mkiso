@@ -22,7 +22,6 @@
 /usr/lib/libfetch.so*
 /usr/lib/libform.so*
 /usr/lib/libformw.so*
-/usr/lib/libftpio.so*
 /usr/lib/libgcc_s.so
 /usr/lib/libgnuregex.so*
 /usr/lib/libgomp.so*
@@ -40,11 +39,9 @@
 /usr/lib/libkiconv.so
 /usr/lib/libkrb5.so*
 /usr/lib/libkvm.so
-/usr/lib/liblwres.so*
 /usr/lib/libmagic.so*
 /usr/lib/libmenuw.so*
 /usr/lib/libmp.so*
-/usr/lib/libncp.so*
 /usr/lib/libncurses.so
 /usr/lib/libncursesw.so
 /usr/lib/libnetgraph.so*
@@ -53,7 +50,6 @@
 /usr/lib/libopie.so*
 /usr/lib/libpam.so*
 /usr/lib/libroken.so*
-/usr/lib/libssh.so*
 /usr/lib/libmilter.so*
 /usr/lib/libthr.so
 /usr/lib/libwrap.so*
